@@ -1,0 +1,47 @@
+#include <iostream>
+
+class Node {
+public:
+    int data;
+    Node* next;
+    Node(int data) : data(data), next(nullptr) {}
+};
+
+class CircularLinkedList {
+public:
+    Node* head;
+    CircularLinkedList() : head(nullptr) {}
+
+    void append(int data) {
+        Node* newNode = new Node(data);
+        if (!head) {
+            head = newNode;
+            newNode->next = head; // Point to itself for circularity
+        } else {
+            Node* current = head;
+            while (current->next != head) {
+                current = current->next;
+            }
+            current->next = newNode;
+            newNode->next = head;
+        }
+    }
+
+    void display() {
+        Node* current = head;
+        do {
+            std::cout << current->data << " -> ";
+            current = current->next;
+        } while (current != head);
+        std::cout << "head" << std::endl;
+    }
+};
+
+int main() {
+    CircularLinkedList myList;
+    myList.append(1);
+    myList.append(2);
+    myList.append(3);
+    myList.display();
+    return 0;
+}

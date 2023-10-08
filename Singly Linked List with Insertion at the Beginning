@@ -1,0 +1,38 @@
+#include <iostream>
+
+class Node {
+public:
+    int data;
+    Node* next;
+    Node(int data) : data(data), next(nullptr) {}
+};
+
+class LinkedList {
+public:
+    Node* head;
+    LinkedList() : head(nullptr) {}
+
+    void prepend(int data) {
+        Node* newNode = new Node(data);
+        newNode->next = head;
+        head = newNode;
+    }
+
+    void display() {
+        Node* current = head;
+        while (current) {
+            std::cout << current->data << " -> ";
+            current = current->next;
+        }
+        std::cout << "nullptr" << std::endl;
+    }
+};
+
+int main() {
+    LinkedList myList;
+    myList.prepend(3);
+    myList.prepend(2);
+    myList.prepend(1);
+    myList.display();
+    return 0;
+}

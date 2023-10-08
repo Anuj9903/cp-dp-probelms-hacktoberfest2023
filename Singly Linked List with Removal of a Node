@@ -1,0 +1,70 @@
+#include <iostream>
+
+class Node {
+public:
+    int data;
+    Node* next;
+    Node(int data) : data(data), next(nullptr) {}
+};
+
+class LinkedList {
+public:
+    Node* head;
+    LinkedList() : head(nullptr) {}
+
+    void append(int data) {
+        Node* newNode = new Node(data);
+        if (!head) {
+            head = newNode;
+        } else {
+            Node* current = head;
+            while (current->next) {
+                current = current->next;
+            }
+            current->next = newNode;
+        }
+    }
+
+    void remove(int data) {
+        if (!head) {
+            return; // List is empty
+        }
+
+        if (head->data == data) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+            return;
+        }
+
+        Node* current = head;
+        while (current->next && current->next->data != data) {
+            current = current->next;
+        }
+
+        if (current->next) {
+            Node* temp = current->next;
+            current->next = current->next->next;
+            delete temp;
+        }
+    }
+
+    void display() {
+        Node* current = head;
+        while (current) {
+            std::cout << current->data << " -> ";
+            current = current->next;
+        }
+        std::cout << "nullptr" << std::endl;
+    }
+};
+
+int main() {
+    LinkedList myList;
+    myList.append(1);
+    myList.append(2);
+    myList.append(3);
+    myList.remove(2);
+    myList.display();
+    return 0;
+}
